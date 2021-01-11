@@ -5,6 +5,9 @@ endif(WIN32)
 add_executable(producer producer.c ${win32_sources})
 target_link_libraries(producer PUBLIC rdkafka)
 
+add_executable(kafka_fuzz_client kafka_fuzz_client.c ${win32_sources})
+target_link_libraries(kafka_fuzz_client PUBLIC rdkafka)
+
 add_executable(producer_cpp producer.cpp ${win32_sources})
 target_link_libraries(producer_cpp PUBLIC rdkafka++)
 

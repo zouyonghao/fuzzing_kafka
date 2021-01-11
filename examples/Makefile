@@ -2,7 +2,7 @@ EXAMPLES ?= rdkafka_example rdkafka_performance rdkafka_example_cpp \
 	rdkafka_complex_consumer_example rdkafka_complex_consumer_example_cpp \
 	kafkatest_verifiable_client \
 	producer consumer idempotent_producer transactions \
-	delete_records
+	delete_records kafka_fuzz_client
 
 all: $(EXAMPLES)
 
@@ -33,6 +33,10 @@ rdkafka_example: ../src/librdkafka.a rdkafka_example.c
 producer: ../src/librdkafka.a producer.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $@.c -o $@ $(LDFLAGS) \
 		../src/librdkafka.a $(LIBS)
+
+kafka_fuzz_client: ../src/librdkafka.a kafka_fuzz_client.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $@.c -o $@ $(LDFLAGS) \
+		../src/librdkafka.a $(LIBS) /home/zyh/AFLplusplus/afl-llvm-rt-64.o
 
 producer_cpp: ../src-cpp/librdkafka++.a ../src/librdkafka.a producer.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) producer.cpp -o $@ $(LDFLAGS) \
